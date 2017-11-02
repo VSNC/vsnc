@@ -1,4 +1,4 @@
-\name{hello}
+\name{VSNC}
 \alias{hello}
 \title{Hello, World!}
 \usage{
