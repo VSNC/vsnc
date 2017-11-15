@@ -12,7 +12,6 @@
 #   Build and Reload Package:  'Ctrl + Shift + B'
 #   Check Package:             'Ctrl + Shift + E'
 #   Test Package:              'Ctrl + Shift + T'
-
 vsnc <- function() {
-  print("Welcome to VSNC")
+  print("I'm Dave, Welcome to VSNC")
 }
