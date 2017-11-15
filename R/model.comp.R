@@ -1,103 +1,63 @@
-if(is.null(library(plyr))){install.packages("plyr")}
-library(plyr)
-model.comp <- function (m1 = NULL, m2 = NULL, Nml = NULL, mulM = NULL, LRT = NULL, 
-                        rdDF = NULL) 
-{
-  if (is.null(mulM)) 
-    mulM = FALSE
-  if (is.null(LRT)) 
-    LRT = FALSE
-  if (is.null(rdDF)) 
-    rdDF = FALSE
-  cat("Attension:\n")
-  cat("Fixed factors should be the same!\n\n\n")
-  Mnames <- NULL
-  Npm <- 0
-  if (mulM == TRUE) {
-    Nmls = ceiling(length(Nml)/43)
-    LogL = Pm = Nedf = 0
-    for (i in 1:Nmls) {
-      LogL[i] <- Nml[[2 + (i - 1) * 43]]
-      Pm[i] = length(Nml[[3 + (i - 1) * 43]])
-      Nedf[i] = length(Nml[[17 + (i - 1) * 43]])
-    }
+model.comp <- function (m1 = NULL, m2 = NULL,LRT=NULL) {
+  library(asreml)
+  if(is.null(m2)){
+    mod1 <- m1
+    vc <- summary(mod1)$varcomp
+    vc
+    DF1 <- nrow(summary(mod1)$varcomp)
+    
+    if ("Fixed" %in% levels(vc$constraint)) 
+      DF1 <- DF1 - table(vc$constraint)["Fixed"]
+    if ("Constrained" %in% levels(vc$constraint)) 
+      DF1 <- DF1 - table(vc$constraint)["Constrained"]
+    if ("Singular" %in% levels(vc$constraint)) 
+      DF1 <- DF1 - table(vc$constraint)["Singular"]
+    
+    logREML <- mod1$loglik;logREML
+    AIC1 <- -2 * logREML + 2 * DF1
+    BIC1 <- -2 * logREML + DF1 * log(mod1$nedf)
+    resu <- data.frame(model = deparse(substitute(m1)), AIC = AIC1, BIC = BIC1)
+  }else{
+    mod1 <- m1
+    DF1 <- nrow(summary(mod1)$varcomp)
+    
+    vc <- summary(mod1)$varcomp
+    DF1 <- nrow(summary(mod1)$varcomp)
+    
+    if ("Fixed" %in% levels(vc$constraint)) 
+      DF1 <- DF1 - table(vc$constraint)["Fixed"]
+    if ("Constrained" %in% levels(vc$constraint)) 
+      DF1 <- DF1 - table(vc$constraint)["Constrained"]
+    if ("Singular" %in% levels(vc$constraint)) 
+      DF1 <- DF1 - table(vc$constraint)["Singular"]
+    logREML <- mod1$loglik
+    AIC1 <- -2 * logREML + 2 * DF1
+    BIC1 <- -2 * logREML + DF1 * log(mod1$nedf)
+    mod2 <- m2
+    DF2 <- nrow(summary(mod2)$varcomp)
+    
+    vc2 <- summary(mod1)$varcomp
+    
+    if ("Fixed" %in% levels(vc2$constraint)) 
+      DF2 <- DF2 - table(vc2$constraint)["Fixed"]
+    if ("Constrained" %in% levels(vc2$constraint)) 
+      DF2 <- DF2 - table(vc2$constraint)["Constrained"]
+    if ("Singular" %in% levels(vc2$constraint)) 
+      DF2 <- DF2 - table(vc2$constraint)["Singular"]
+    
+    logREML <- mod2$loglik
+    AIC2 <- -2 * logREML + 2 * DF2
+    BIC2 <- -2 * logREML + DF2 * log(mod2$nedf)
+    resu <- data.frame(model = c(deparse(substitute(m1)),deparse(substitute(m2)))
+                       , AIC = c(AIC1,AIC2)
+                       , BIC = c(BIC1,BIC2))
+    resu$AIC.stat = ""
+    resu$AIC.stat[which.min(resu$AIC)] <- "better"
+    
+    resu$BIC.stat = ""
+    resu$BIC.stat[which.min(resu$BIC)] <- "better"
   }
-  else {
-    LogL = c(m1[[2]], m2[[2]])
-    Pm = c(length(m1[[3]]), length(m2[[3]]))
-    Nedf = c(m1[[17]], m2[[17]])
-    Nmls = 2
-    Mnames <- c(deparse(substitute(m1)), deparse(substitute(m2)))
-  }
-  df <- data.frame(LogL = LogL, Npm = Pm)
-  AIC = 2 * (Pm - LogL)
-  df$AIC <- AIC
-  ifelse(mulM == TRUE, df$Model <- paste("m", 1:Nmls, sep = ""), 
-         df$Model <- Mnames)
-  df <- df[, c(4, 1:3)]
-  BIC = -2 * LogL + Pm * log(Nedf)
-  df$BIC = BIC
-  b1 <- which.min(AIC)
-  df$AIC.State <- ""
-  df[b1, 6] <- "better"
-  b2 <- which.min(BIC)
-  df$BIC.State <- ""
-  df[b2, 7] <- "better"
-  df <- arrange(df, df$Npm)
-  print(df)
-  cat("-----------------------------\n")
-  cat("Lower AIC and BIC is better model.\n\n")
-  A <- combn(1:Nmls, 2)
-  B <- Nmls * (Nmls - 1)/2
-  if (LRT == TRUE) {
-    cat("\n\n")
-    cat("Attension: Please check every asreml results' length is 43;\n")
-    cat("if the length < 43, put the object at the end of Nml.\n")
-    cat("In the present, just allow one object's length < 43.")
-    cat("\n=====================================")
-    cat("\nLikelihood ratio test (LRT) results:\n\n")
-    for (i in 1:B) {
-      if (B > 1) 
-        df1 <- df[A[, i], 1:4]
-      else df1 <- df[1:2, 1:4]
-      df1 <- arrange(df1, df1$Npm)
-      DlogL = df1$LogL[2] - df1$LogL[1]
-      Ddf = df1$Npm[2] - df1$Npm[1]
-      pv <- ifelse(rdDF == TRUE, round(1 - pchisq(2 * DlogL, 
-                                                  Ddf - 0.5), 3), round(1 - pchisq(2 * DlogL, Ddf), 
-                                                                        3))
-      df1$pv <- c(0, pv)
-      names(df1)[5] <- "Pr(>F)"
-      siglevel <- 0
-      if (abs(pv) < 0.05) {
-        siglevel <- "*"
-      }
-      else {
-        siglevel <- "Not signif"
-      }
-      if (abs(pv) < 0.01) {
-        siglevel <- "**"
-      }
-      if (abs(pv) < 0.001) {
-        siglevel <- "***"
-      }
-      df1$Sig.level <- c(0, siglevel)
-      df1[1, 5:6] <- ""
-      df2 <- arrange(df1, df1$Model)
-      cat("\nModel compared between ", df2$Model[1], "--", 
-          df2$Model[2], ":\n")
-      print(df1)
-      cat("---------------")
-      cat("\nSig.level: 0'***' 0.001 '**' 0.01 '*' 0.05 'Not signif' 1\n\n")
-    }
-    cat("=====================================")
-    if (rdDF == TRUE) {
-      cat("\nAttension: Ddf=Ddf-0.5. \n")
-      cat("When for corr model, against +/-1. \n\n")
-    }
-    else {
-      cat("\nAttension: Ddf did not minus 0.5. \n")
-      cat("When for corr model, against 0. \n\n")
-    }
-  }
+  return(resu)
 }
+
+
