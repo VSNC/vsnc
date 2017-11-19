@@ -1,12 +1,13 @@
-\name{VSNC}
+\name{vsnc}
 \alias{hello}
-\title{Hello, World!}
+\title{Hello, VSNC!}
 \usage{
-hello()
+vsnc()
 }
 \description{
-Prints 'Hello, world!'.
+Prints 'Hello there, Welcom to VSNC!'.
 }
 \examples{
-hello()
+vsnc()
+# Hello there, Welcom to VSNC!
 }

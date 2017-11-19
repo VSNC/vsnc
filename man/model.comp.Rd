@@ -14,6 +14,6 @@ head(oats)
 m1 <- asreml(yield ~ 1, random=~Nitrogen*Variety, data=oats)
 m2 <- asreml(yield ~ 1, random=~Nitrogen*Variety+Blocks, data=oats)
 m3 <- asreml(yield ~ 1, random=~Nitrogen*Variety+Blocks/Wplots, data=oats)
-vsnc::model.comp(m1)
-vsnc::model.comp(m3,m2)
+model.comp(m1)
+model.comp(m3,m2)
 }

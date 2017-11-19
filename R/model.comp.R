@@ -1,5 +1,5 @@
-model.comp <- function (m1 = NULL, m2 = NULL,LRT=NULL) {
-  library(asreml)
+model.comp <- function (m1 = NULL, m2 = NULL) {
+  # library(asreml)
   if(is.null(m2)){
     mod1 <- m1
     vc <- summary(mod1)$varcomp

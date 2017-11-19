@@ -13,5 +13,5 @@
 #   Check Package:             'Ctrl + Shift + E'
 #   Test Package:              'Ctrl + Shift + T'
 vsnc <- function() {
-  print("I'm Dave, Welcome to VSNC")
+  print("Hi there, Welcome to VSNC")
 }
