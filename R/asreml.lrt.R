@@ -1,3 +1,23 @@
+#' @title Calculate the LRT test for model compare.
+#' 
+#' @description  
+#' \code{asreml.lrt} can Calculate the LRT test for model compare.
+#' @param m1 The asreml object
+#' @param m2 The asreml object
+#' @return The LRT test for \code{m1} and \code{m2}
+#' @author Dave <Dave@vsni.co.uk>
+#' @seealso \code{\link{model.comp}}
+#' @examples
+#' library(asreml)
+#' data(oats,package = "asreml")
+#' head(oats)
+#' m1 <- asreml(yield ~ 1, random=~Nitrogen*Variety, data=oats)
+#' m2 <- asreml(yield ~ 1, random=~Nitrogen*Variety+Blocks, data=oats)
+#' asreml.lrt(m1,m2)
+
+
+
+
 asreml.lrt <- function (m1,m2) {
   fixed.labels <- lapply(list(m1, m2), 
                          function(x) {

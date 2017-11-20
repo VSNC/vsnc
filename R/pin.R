@@ -1,7 +1,23 @@
+#' @title Calculate the Heritibality and Genetic Correlation
+#' @description This is the function that can calculate the Heritibality and Genetic Correlation
+#' @param object It is the asreml object
+#' @param transform It is the formula of calculation
+#' @seealso \code{\link{model.comp}} , \code{\link{asreml.lrt}}
+#' @author Dave <Dave@vsni.co.uk>
+#' @examples 
+#' library(asreml)
+#' data(harvey,package = "asreml")
+#' head(harvey)
+#' ainv <- asreml.Ainverse(harvey[,1:3])$ginv
+#' mod.asr <- asreml(y1 ~ Line, random = ~ ped(Calf), ginverse = list(Calf = ainv),data=harvey)
+#' summary(mod.asr)$varcomp
+#' pin(mod.asr,h2 ~ V1/(V1+V2))
+
+
 pin <- function(object,transform){
   pframe <- as.list(object$gammas)
   names(pframe) <- paste("V", seq(1, length(pframe)), sep = "")
-  transform <- h2 ~ V1/(V1+V2+V3)
+  # transform <- h2 ~ V1/(V1+V2+V3)
   tvalue <- eval(deriv(transform[[length(transform)]], names(pframe)), 
                  pframe)
   X <- as.vector(attr(tvalue, "gradient"))

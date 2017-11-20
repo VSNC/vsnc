@@ -1,17 +1,7 @@
-# Hello, world!
-#
-# This is an example function named 'hello' 
-# which prints 'Hello, world!'.
-#
-# You can learn more about package authoring with RStudio at:
-#
-#   http://r-pkgs.had.co.nz/
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Build and Reload Package:  'Ctrl + Shift + B'
-#   Check Package:             'Ctrl + Shift + E'
-#   Test Package:              'Ctrl + Shift + T'
-vsnc <- function() {
-  print("Hi there, Welcome to VSNC")
-}
+#' A package that provide data and analysis code in Agri
+#' 
+#' That contains plant breeding, forest breeding, animal breeding etc.
+#' It also have some functions that assist asreml package.
+#' 
+#' @author Dave<Dave@vsni.co.uk>
+NULL

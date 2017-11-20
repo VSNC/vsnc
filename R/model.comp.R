@@ -1,3 +1,20 @@
+#' Calculate the AIC and BIC
+#' 
+#' @param m1 The asreml object
+#' @param m2 The asreml object
+#' @return The AIC and BIC of \code{m1} and \code{m2}
+#' @author Dave <Dave@vsni.co.uk>
+#' @seealso \code{\link{asreml.lrt}}
+#' @examples 
+#' data(oats,package = "asreml")
+#' head(oats)
+#' m1 <- asreml(yield ~ 1, random=~Nitrogen*Variety, data=oats)
+#' m2 <- asreml(yield ~ 1, random=~Nitrogen*Variety+Blocks, data=oats)
+#' m3 <- asreml(yield ~ 1, random=~Nitrogen*Variety+Blocks/Wplots, data=oats)
+#' model.comp(m1)
+#' model.comp(m3,m2) 
+
+
 model.comp <- function (m1 = NULL, m2 = NULL) {
   # library(asreml)
   if(is.null(m2)){
