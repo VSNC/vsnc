@@ -4,7 +4,7 @@
 \alias{asreml.lrt}
 \title{Calculate the LRT test for model compare.}
 \usage{
-asreml.lrt(m1, m2)
+asreml.lrt(m1 = NULL, m2 = NULL)
 }
 \arguments{
 \item{m1}{The asreml object}
@@ -19,6 +19,7 @@ The LRT test for \code{m1} and \code{m2}
 }
 \examples{
 library(asreml)
+library(vsnc)
 data(oats,package = "asreml")
 head(oats)
 m1 <- asreml(yield ~ 1, random=~Nitrogen*Variety, data=oats)

@@ -4,4 +4,5 @@
 #' It also have some functions that assist asreml package.
 #' 
 #' @author Dave<Dave@vsni.co.uk>
+#' @name vsnc
 NULL

@@ -18,6 +18,8 @@ The AIC and BIC of \code{m1} and \code{m2}
 Calculate the AIC and BIC
 }
 \examples{
+library(asreml)
+library(vsnc)
 data(oats,package = "asreml")
 head(oats)
 m1 <- asreml(yield ~ 1, random=~Nitrogen*Variety, data=oats)

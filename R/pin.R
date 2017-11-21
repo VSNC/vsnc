@@ -15,6 +15,8 @@
 
 
 pin <- function(object,transform){
+  if(is.null(object)) return("Please choose the asreml object")
+  
   pframe <- as.list(object$gammas)
   names(pframe) <- paste("V", seq(1, length(pframe)), sep = "")
   # transform <- h2 ~ V1/(V1+V2+V3)

@@ -28,11 +28,11 @@
 #' summary(moda)
 #' 
 #' # The msanova code
-#' library(msanova)
-#' data(Canova,package="vsnc")
-#' modb <- msanova(yield ~ N*S,blockstructure =~ block,data = Canola )
-#' summary(modb)
-#' plot(modb)
+#' # library(msanova)
+#' # data(Canova,package="vsnc")
+#' # modb <- msanova(yield ~ N*S,blockstructure =~ block,data = Canola )
+#' # summary(modb)
+#' # plot(modb)
 #' 
 #' # The asreml code
 #' data(Canova,package="vsnc")

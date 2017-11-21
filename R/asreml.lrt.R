@@ -9,6 +9,7 @@
 #' @seealso \code{\link{model.comp}}
 #' @examples
 #' library(asreml)
+#' library(vsnc)
 #' data(oats,package = "asreml")
 #' head(oats)
 #' m1 <- asreml(yield ~ 1, random=~Nitrogen*Variety, data=oats)
@@ -18,7 +19,8 @@
 
 
 
-asreml.lrt <- function (m1,m2) {
+asreml.lrt <- function (m1=NULL,m2=NULL) {
+  if(is.null(m1) ) return("Please choose the asreml object")
   fixed.labels <- lapply(list(m1, m2), 
                          function(x) {
                            attr(terms(x$fixed.formula), "term.labels")

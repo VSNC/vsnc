@@ -6,6 +6,8 @@
 #' @author Dave <Dave@vsni.co.uk>
 #' @seealso \code{\link{asreml.lrt}}
 #' @examples 
+#' library(asreml)
+#' library(vsnc)
 #' data(oats,package = "asreml")
 #' head(oats)
 #' m1 <- asreml(yield ~ 1, random=~Nitrogen*Variety, data=oats)
@@ -16,11 +18,12 @@
 
 
 model.comp <- function (m1 = NULL, m2 = NULL) {
+  if(is.null(m1) ) return("Please choose the asreml object")
   # library(asreml)
   if(is.null(m2)){
     mod1 <- m1
     vc <- summary(mod1)$varcomp
-    vc
+    # vc
     DF1 <- nrow(summary(mod1)$varcomp)
     
     if ("Fixed" %in% levels(vc$constraint)) 
@@ -30,7 +33,7 @@ model.comp <- function (m1 = NULL, m2 = NULL) {
     if ("Singular" %in% levels(vc$constraint)) 
       DF1 <- DF1 - table(vc$constraint)["Singular"]
     
-    logREML <- mod1$loglik;logREML
+    logREML <- mod1$loglik
     AIC1 <- -2 * logREML + 2 * DF1
     BIC1 <- -2 * logREML + DF1 * log(mod1$nedf)
     resu <- data.frame(model = deparse(substitute(m1)), AIC = AIC1, BIC = BIC1)
