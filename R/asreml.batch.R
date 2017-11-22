@@ -70,6 +70,7 @@ asreml.batch <- function (data, factorN, traitN, FMod = NULL, RMod = NULL, EMod 
           ginverse = NULL){
   options(digits = 3)
   library(asreml)
+  if(is.null(data)) return("Please choose the data")
   if (is.null(mulT)) 
     mulT = FALSE
   if (is.null(mulR)) 
