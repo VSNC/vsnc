@@ -58,4 +58,4 @@ asreml.lrt <- function (m1=NULL,m2=NULL) {
   }
   
 }
-# asreml.lrt(m2,m3)
+
