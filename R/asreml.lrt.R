@@ -34,8 +34,8 @@ asreml.lrt <- function (m1=NULL,m2=NULL) {
     }
   }
   
-  n1 <- length(attr(m1$random.formula,"str.group"))
-  n2 <- length(attr(m2$random.formula,"str.group"))
+  n1 <- nrow(summary(m1)$varcomp)
+  n2 <- nrow(summary(m2)$varcomp)
   
   if(n1 > n2){
   summ.full <- summary(m1)
