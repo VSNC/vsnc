@@ -22,4 +22,28 @@
 #' @source 
 #'Julian Besag and D Higdon, 1999. Bayesian Analysis of Agricultural Field Experiments, Journal of the Royal Statistical Society: Series B (Statistical Methodology).
 #' 
+#' @examples 
+#' library(vsnc)
+#' library(ggplot2)
+#' library(agridat)
+#' data(MET)
+#' dat <- MET
+#' summary(dat)
+#' 
+#' # Boxplot for Loc
+#' ggplot(dat, aes(x=Loc, y=yield,colour = Loc)) + geom_boxplot()
+#' 
+#' # Boxplot for Loc:Rep
+#' ggplot(dat, aes(x=interaction(Rep,Loc), y=yield,colour=Loc)) + geom_boxplot()
+#' 
+#' # Field map for Loc1
+#' dd <- subset(dat,Loc=="C1")
+#' desplot(yield ~ Col*Row, out1=Rep,dd,main="田间种植图")
+#' desplot(yield ~ Col*Row, out1=Rep, out2=Block,dd,main="田间种植图")
+#' 
+#' # Field map for Locations
+#' desplot(yield ~ Col*Row|Loc, out1=Rep,dat,main="田间种植图")
+#' desplot(yield ~ Col*Row|Loc, out1=Rep,out2=Block,dat,main="田间种植图")
+#' 
+
 "MET"

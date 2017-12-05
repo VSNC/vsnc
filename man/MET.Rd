@@ -29,4 +29,28 @@ Design and Analysis of Experiments, page 99.
 Multi-environment trial of 64 corn hybrids in six counties in North Carolina. Each location had 3 replicates in in incomplete-block design.
 Note: In the original data, each county had 6 missing plots. This data has rows for each missing plot that uses the same county/block/rep to fill-out the row, sets the genotype to G01, and sets the yield to missing. These missing values were added to the data so that asreml could more easily do AR1xAR1 analysis using rectangular fields.
 }
+\examples{
+library(vsnc)
+library(ggplot2)
+library(agridat)
+data(MET)
+dat <- MET
+summary(dat)
+
+# Boxplot for Loc
+ggplot(dat, aes(x=Loc, y=yield,colour = Loc)) + geom_boxplot()
+
+# Boxplot for Loc:Rep
+ggplot(dat, aes(x=interaction(Rep,Loc), y=yield,colour=Loc)) + geom_boxplot()
+
+# Field map for Loc1
+dd <- subset(dat,Loc=="C1")
+desplot(yield ~ Col*Row, out1=Rep,dd,main="田间种植图")
+desplot(yield ~ Col*Row, out1=Rep, out2=Block,dd,main="田间种植图")
+
+# Field map for Locations
+desplot(yield ~ Col*Row|Loc, out1=Rep,dat,main="田间种植图")
+desplot(yield ~ Col*Row|Loc, out1=Rep,out2=Block,dat,main="田间种植图")
+
+}
 \keyword{datasets}
