@@ -15,7 +15,7 @@
 #' VSN International (2014). Genstat for Windows 17th Edition. VSN International,
 #'  Hemel Hempstead, UK. Web page: Genstat.co.uk
 #' @examples 
-#' data(Rat,package="vsnc")
+#' dat(Rat)
 #' moda <- aov(weight ~ diet,data=Rat)
 #' summary(moda)
 #' 

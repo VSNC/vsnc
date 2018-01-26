@@ -3,8 +3,7 @@
 \docType{data}
 \name{MET}
 \alias{MET}
-\title{Multi-environment trial of corn laid out in incomplete-blocks
-Multi-environment trial of corn laid out in incomplete-blocks}
+\title{MET data}
 \format{\describe{A data frame with 1152 observations on the following 7 variables.
 \item{Loc}{Location}
 \item{Rep}{Replation that contains a coup of blocks}
@@ -21,11 +20,14 @@ Julian Besag and D Higdon, 1999. Bayesian Analysis of Agricultural Field Experim
 MET
 }
 \description{
+Multi-environment trial of corn laid out in incomplete-blocks
+}
+\details{
 The Design and Analysis of Factorial Experiments, 
 page 74; John, P.W.M. (1971) Statistical 
 Design and Analysis of Experiments, page 99.
-}
-\details{
+
+
 Multi-environment trial of 64 corn hybrids in six counties in North Carolina. Each location had 3 replicates in in incomplete-block design.
 Note: In the original data, each county had 6 missing plots. This data has rows for each missing plot that uses the same county/block/rep to fill-out the row, sets the genotype to G01, and sets the yield to missing. These missing values were added to the data so that asreml could more easily do AR1xAR1 analysis using rectangular fields.
 }
@@ -45,12 +47,12 @@ ggplot(dat, aes(x=interaction(Rep,Loc), y=yield,colour=Loc)) + geom_boxplot()
 
 # Field map for Loc1
 dd <- subset(dat,Loc=="C1")
-desplot(yield ~ Col*Row, out1=Rep,dd,main="田间种植图")
+field.map(yield ~ Col*Row, out1=Rep,dd,main="田间种植图")
 desplot(yield ~ Col*Row, out1=Rep, out2=Block,dd,main="田间种植图")
 
 # Field map for Locations
-desplot(yield ~ Col*Row|Loc, out1=Rep,dat,main="田间种植图")
-desplot(yield ~ Col*Row|Loc, out1=Rep,out2=Block,dat,main="田间种植图")
+field.map(yield ~ Col*Row|Loc, out1=Rep,dat,main="田间种植图")
+field.map(yield ~ Col*Row|Loc, out1=Rep,out2=Block,dat,main="田间种植图")
 
 }
 \keyword{datasets}

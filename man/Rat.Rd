@@ -23,7 +23,7 @@ study the effect of a dietary supplement on the gain
   and 20 rats were allocated at random, four to each treatment.
 }
 \examples{
-data(Rat,package="vsnc")
+dat(Rat)
 moda <- aov(weight ~ diet,data=Rat)
 summary(moda)
 

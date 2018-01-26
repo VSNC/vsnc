@@ -1,4 +1,5 @@
-#' Multi-environment trial of corn laid out in incomplete-blocks
+#' MET data
+#' 
 #' Multi-environment trial of corn laid out in incomplete-blocks
 #' 
 #' The Design and Analysis of Factorial Experiments, 
@@ -38,12 +39,12 @@
 #' 
 #' # Field map for Loc1
 #' dd <- subset(dat,Loc=="C1")
-#' desplot(yield ~ Col*Row, out1=Rep,dd,main="田间种植图")
+#' field.map(yield ~ Col*Row, out1=Rep,dd,main="田间种植图")
 #' desplot(yield ~ Col*Row, out1=Rep, out2=Block,dd,main="田间种植图")
 #' 
 #' # Field map for Locations
-#' desplot(yield ~ Col*Row|Loc, out1=Rep,dat,main="田间种植图")
-#' desplot(yield ~ Col*Row|Loc, out1=Rep,out2=Block,dat,main="田间种植图")
+#' field.map(yield ~ Col*Row|Loc, out1=Rep,dat,main="田间种植图")
+#' field.map(yield ~ Col*Row|Loc, out1=Rep,out2=Block,dat,main="田间种植图")
 #' 
 
 "MET"
